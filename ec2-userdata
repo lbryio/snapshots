@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# reminder: logs from userdata script go to /var/log/cloud-init-output.log
+# you can also log script output by adding this to the top of the script:
+#   exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+# see https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-log-user-data/
+
+echo "creating setup script"
+
+wget -O /home/ubuntu/setup.sh https://raw.githubusercontent.com/lbryio/snapshots/master/blockchain_setup.sh
+wget -O /home/ubuntu/snapshot.sh https://raw.githubusercontent.com/lbryio/snapshots/master/blockchain_snapshot.sh
+
+chmod +x /home/ubuntu/setup.sh /home/ubuntu/snapshot.sh
+chown ubuntu:ubuntu /home/ubuntu/setup.sh /home/ubuntu/snapshot.sh
+
+sudo --set-home --non-interactive --user=ubuntu /bin/bash -c 'cd /home/ubuntu; ./setup.sh'
+sudo --set-home --non-interactive --user=ubuntu /bin/bash -c 'cd /home/ubuntu; ./snapshot.sh'

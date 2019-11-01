@@ -1,0 +1,12 @@
+{
+    "BlockDeviceMappings": [{"DeviceName": "/dev/sda1", "Ebs": {"DeleteOnTermination": true, "VolumeSize": 50, "VolumeType": "gp2"}}],
+    "ImageId": "ami-0d5d9d301c853a04a",
+    "InstanceType": "t3.large",
+    "KeyName": "master-key-20181218",
+    "SecurityGroupIds": ["sg-d64cafbe"],
+    "SubnetId": "subnet-eef8ee96",
+    "UserData": "",
+    "InstanceInitiatedShutdownBehavior": "terminate",
+    "IamInstanceProfile": {"Arn": "arn:aws:iam::275835546274:instance-profile/ec2-snapshotter"},
+    "TagSpecifications": [{"ResourceType": "instance", "Tags": [{"Key": "Name", "Value": "snapshotter"}]}]
+}
