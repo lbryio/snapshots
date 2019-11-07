@@ -5,13 +5,19 @@
 #   exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 # see https://aws.amazon.com/premiumsupport/knowledge-center/ec2-linux-log-user-data/
 
-echo "creating setup script"
+sudo apt update && \
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common unzip awscli && \
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+sudo apt install -y docker-ce docker-ce-cli containerd.io && \
+sudo systemctl enable docker && sudo systemctl start docker && \
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+sudo chmod +x /usr/local/bin/docker-compose
 
-wget -O /home/ubuntu/setup.sh https://raw.githubusercontent.com/lbryio/snapshots/master/blockchain_setup.sh
-wget -O /home/ubuntu/snapshot.sh https://raw.githubusercontent.com/lbryio/snapshots/master/blockchain_snapshot.sh
+wget -O /home/ubuntu/snapshot.sh "https://raw.githubusercontent.com/lbryio/snapshots/master/snapshot.sh"
+wget -O /home/ubuntu/docker-compose.yml "https://gist.githubusercontent.com/lyoshenka/2557c08344bfe1020f0c0a13b9c5b0ce/raw/docker-compose.yml"
 
-chmod +x /home/ubuntu/setup.sh /home/ubuntu/snapshot.sh
-chown ubuntu:ubuntu /home/ubuntu/setup.sh /home/ubuntu/snapshot.sh
+chown ubuntu:ubuntu /home/ubuntu/snapshot.sh /home/ubuntu/docker-compose.yml
+chmod +x /home/ubuntu/snapshot.sh
 
-sudo --set-home --non-interactive --user=ubuntu /bin/bash -c 'cd /home/ubuntu; ./setup.sh'
 sudo --set-home --non-interactive --user=ubuntu /bin/bash -c 'cd /home/ubuntu; ./snapshot.sh'
