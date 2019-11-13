@@ -4,6 +4,8 @@
 
 echo "Running $0"
 
+hash aws 2>/dev/null || { echo >&2 '`aws` command not found. Install it: sudo apt install awscli'; exit 1;  }
+
 user=$(whoami)
 
 echo "Starting servers"
