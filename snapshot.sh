@@ -30,18 +30,21 @@ while true; do
 done
 echo "final: $HEIGHT $HEADERS $BLOCKS $WALLET_BLOCKS"
 
+LBRYCRD_VERSION=$(sudo docker exec ubuntu_lbrycrd_1 lbrycrd-cli -conf=/etc/lbry/lbrycrd.conf getnetworkinfo 2>/dev/null | grep -m 1 subversion | egrep -o '[0-9\.]+')
+WALLET_SERVER_VERSION=$(echo '{"id":1,"method":"server.version"}' | nc localhost 50001 | egrep -m 1 -o 'result[^,]+' | cut -d'"' -f3)
+
 echo "Stopping servers"
 sudo docker-compose down
 
 # TODO: get volume data locations from `docker volume inspect` instead of hardcoding them below
 
-BLOCKCHAIN_SNAPSHOT="$HOME/blockchain_snapshot_${WALLET_BLOCKS}_$(date +%F).tar.bz2"
+BLOCKCHAIN_SNAPSHOT="$HOME/blockchain_snapshot_${WALLET_BLOCKS}_v${LBRYCRD_VERSION}_$(date +%F).tar.bz2"
 echo "Making blockchain snapshot $BLOCKCHAIN_SNAPSHOT"
 sudo tar -cjvf "$BLOCKCHAIN_SNAPSHOT" -C /var/lib/docker/volumes/${user}_lbrycrd/_data --group=$user --owner=$user blocks/ chainstate/ claimtrie/ indexes/
 echo "Uploading blockchain snapshot to s3"
 aws s3 cp "$BLOCKCHAIN_SNAPSHOT" s3://snapshots.lbry.com/blockchain/ --region us-east-2
 
-WALLET_SNAPSHOT="$HOME/wallet_snapshot_${WALLET_BLOCKS}_$(date +%F).tar.bz2"
+WALLET_SNAPSHOT="$HOME/wallet_snapshot_${WALLET_BLOCKS}_v${WALLET_SERVER_VERSION}_$(date +%F).tar.bz2"
 echo "Making wallet snapshot $SNAPSHOT"
 sudo tar -cjvf "$WALLET_SNAPSHOT" -C /var/lib/docker/volumes/${user}_wallet_server/_data --group=$user --owner=$user claims.db hist/ meta/ utxo/
 echo "Uploading wallet snapshot to s3"
