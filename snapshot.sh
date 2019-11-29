@@ -30,7 +30,7 @@ while true; do
 done
 echo "final: $HEIGHT $HEADERS $BLOCKS $WALLET_BLOCKS"
 
-LBRYCRD_VERSION=$(sudo docker exec ubuntu_lbrycrd_1 lbrycrd-cli -conf=/etc/lbry/lbrycrd.conf getnetworkinfo 2>/dev/null | grep -m 1 subversion | egrep -o '[0-9\.]+')
+LBRYCRD_VERSION=$(sudo docker exec ${user}_lbrycrd_1 lbrycrd-cli -conf=/etc/lbry/lbrycrd.conf getnetworkinfo 2>/dev/null | grep -m 1 subversion | egrep -o '[0-9\.]+')
 WALLET_SERVER_VERSION=$(echo '{"id":1,"method":"server.version"}' | nc localhost 50001 | egrep -m 1 -o 'result[^,]+' | cut -d'"' -f3)
 
 echo "Stopping servers"
