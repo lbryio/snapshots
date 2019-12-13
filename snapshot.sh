@@ -5,7 +5,7 @@
 echo "Running $0"
 
 hash aws 2>/dev/null || { echo >&2 '`aws` command not found. Install it: sudo apt install awscli'; exit 1;  }
-[ "$(curl -q http://169.254.169.254/latest/meta-data/iam/security-credentials)" == "ec2-snapshotter" ] || { echo >&2 'This instance is missing the "ec2-snapshotter" IAM role'; exit 1;  }
+[ "$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials)" == "ec2-snapshotter" ] || { echo >&2 'This instance is missing the "ec2-snapshotter" IAM role'; exit 1;  }
 
 user=$(whoami)
 
