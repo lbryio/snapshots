@@ -15,7 +15,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 wget -O /home/ubuntu/snapshot.sh "https://raw.githubusercontent.com/lbryio/snapshots/master/snapshot.sh"
-wget -O /home/ubuntu/docker-compose.yml "https://gist.githubusercontent.com/lyoshenka/2557c08344bfe1020f0c0a13b9c5b0ce/raw/docker-compose.yml"
+wget -O /home/ubuntu/docker-compose.yml "https://raw.githubusercontent.com/lbryio/lbry-sdk/master/docker/docker-compose-wallet-server.yml"
 
 chown ubuntu:ubuntu /home/ubuntu/snapshot.sh /home/ubuntu/docker-compose.yml
 chmod +x /home/ubuntu/snapshot.sh
