@@ -1,7 +1,7 @@
 {
-    "BlockDeviceMappings": [{"DeviceName": "/dev/sda1", "Ebs": {"DeleteOnTermination": true, "VolumeSize": 50, "VolumeType": "gp2"}}],
+    "BlockDeviceMappings": [{"DeviceName": "/dev/sda1", "Ebs": {"DeleteOnTermination": true, "VolumeSize": 250, "VolumeType": "gp2"}}],
     "ImageId": "ami-0d5d9d301c853a04a",
-    "InstanceType": "t3.large",
+    "InstanceType": "m5d.large",
     "KeyName": "master-key-20181218",
     "SecurityGroupIds": ["sg-d64cafbe"],
     "SubnetId": "subnet-eef8ee96",

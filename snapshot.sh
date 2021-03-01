@@ -25,7 +25,7 @@ while true; do
 
   HEADERS=$(echo "$info" | grep headers | egrep -o '[0-9]+')
   BLOCKS=$(echo "$info" | grep blocks | egrep -o '[0-9]+')
-  echo "$HEIGHT $HEADERS $BLOCKS $WALLET_BLOCKS"
+  echo "explorer height $HEIGHT, headers height $HEADERS, lbrycrd $BLOCKS, wallet $WALLET_BLOCKS"
   if [[ "$HEADERS" -ge "$HEIGHT" && "$BLOCKS" -ge "$HEADERS" && "$WALLET_BLOCKS" -ge "$BLOCKS" ]]; then break; else sleep 1; fi
 done
 echo "final: $HEIGHT $HEADERS $BLOCKS $WALLET_BLOCKS"
