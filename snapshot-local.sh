@@ -71,7 +71,7 @@ echo "lbrycrdd stopped"
 
 
 
-BLOCKCHAIN_SNAPSHOT="$SNAPSHOT_DIR/blockchain_snapshot_${BLOCKS}_v${LBRYCRD_VERSION}_$(date +%F).tgz"
+BLOCKCHAIN_SNAPSHOT="$SNAPSHOT_DIR/lbrycrd_snapshot_${BLOCKS}_v${LBRYCRD_VERSION}_$(date +%F).tgz"
 
 case "$LBRYCRD_VERSION" in
   0.17.3.*)
